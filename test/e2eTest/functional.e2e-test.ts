@@ -88,7 +88,7 @@ describe('Japanesify', () => {
 
     // He goes back to the tab and notices that all the 'n's are replaced by 'ん's
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     expect(body).not.toContain('n');
     expect(body).toContain('ん');
@@ -118,7 +118,7 @@ describe('Japanesify', () => {
 
     // then goes back to the first wiki page and sees that the 'n's are back
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     expect(body).not.toContain('ん');
     expect(body).toContain('n');
@@ -126,16 +126,18 @@ describe('Japanesify', () => {
     // he also notices the page looks the same as it did before being altered
     const restoredImage =
       await wikiPage.screenshot(/*{ path: path.join(__dirname, 'restored.png')}*/);
+    const restoredImageBuffer = Buffer.from(restoredImage); // Convert Uint8Array to Buffer
+    const originalImageBuffer = Buffer.from(originalImage); // Ensure originalImage is also a Buffer
     looksSame(
-      originalImage,
-      restoredImage,
+      originalImageBuffer,
+      restoredImageBuffer,
       { tolerance: 50 },
       (_, { equal }) => {
         expect(equal).toBe(true);
       }
     );
 
-    await wikiPage.waitForTimeout(3000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Satisfied he goes to sleep
   }, 10000);
@@ -202,7 +204,7 @@ describe('Japanesify', () => {
     // He goes back to the tab and notices that all the 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa'
     // are replaced by 'あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ'
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaA.forEach((roma) => expect(body).not.toContain(roma));
     hiraA.forEach((hira) => expect(body).toContain(hira));
@@ -234,7 +236,7 @@ describe('Japanesify', () => {
     // then goes back to the first wiki page and sees that the
     // 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa' are back
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaA.forEach((roma) => expect(body).toContain(roma));
     hiraA.forEach((hira) => expect(body).not.toContain(hira));
@@ -242,16 +244,19 @@ describe('Japanesify', () => {
     // he also notices the page looks the same as it did before being altered
     const restoredImage =
       await wikiPage.screenshot(/*{ path: path.join(__dirname, 'restored.png')}*/);
+    const restoredImageBuffer = Buffer.from(restoredImage); // Convert Uint8Array to Buffer
+    const originalImageBuffer = Buffer.from(originalImage); // Ensure originalImage is also a Buffer
+
     looksSame(
-      originalImage,
-      restoredImage,
+      originalImageBuffer,
+      restoredImageBuffer,
       { tolerance: 82 },
       (_, { equal }) => {
         expect(equal).toBe(true);
       }
     );
 
-    await wikiPage.waitForTimeout(3000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Satisfied he goes to sleep
   }, 10000);
@@ -318,7 +323,7 @@ describe('Japanesify', () => {
     // He goes back to the tab and notices that all the i, ki, shi, chi, ni, hi, mi, ri
     // are replaced by い, き, し, ち, に, ひ, み, り
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaI.forEach((roma) => expect(body).not.toContain(roma));
     hiraI.forEach((hira) => expect(body).toContain(hira));
@@ -350,7 +355,7 @@ describe('Japanesify', () => {
     // then goes back to the first wiki page and sees that the
     // i, ki, shi, chi, ni, hi, mi, ri are back
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaI.forEach((roma) => expect(body).toContain(roma));
     hiraI.forEach((hira) => expect(body).not.toContain(hira));
@@ -358,16 +363,19 @@ describe('Japanesify', () => {
     // he also notices the page looks the same as it did before being altered
     const restoredImage =
       await wikiPage.screenshot(/*{ path: path.join(__dirname, 'restored.png')}*/);
+    const restoredImageBuffer = Buffer.from(restoredImage); // Convert Uint8Array to Buffer
+    const originalImageBuffer = Buffer.from(originalImage); // Ensure originalImage is also a Buffer
+
     looksSame(
-      originalImage,
-      restoredImage,
+      originalImageBuffer,
+      restoredImageBuffer,
       { tolerance: 82 },
       (_, { equal }) => {
         expect(equal).toBe(true);
       }
     );
 
-    await wikiPage.waitForTimeout(3000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Satisfied he goes to sleep
   }, 10000);
@@ -434,7 +442,7 @@ describe('Japanesify', () => {
     // He goes back to the tab and notices that all the u, ku, su, tsu, nu, fu, mu, ru, yu
     // are replaced by う, く, す, つ, ぬ, ふ, む, る, ゆ
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaU.forEach((roma) => expect(body).not.toContain(roma));
     hiraU.forEach((hira) => expect(body).toContain(hira));
@@ -464,7 +472,7 @@ describe('Japanesify', () => {
     // then goes back to the first wiki page and sees that the
     // i, ki, shi, chi, ni, hi, mi, ri are back
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaU.forEach((roma) => expect(body).toContain(roma));
     hiraU.forEach((hira) => expect(body).not.toContain(hira));
@@ -472,16 +480,19 @@ describe('Japanesify', () => {
     // he also notices the page looks the same as it did before being altered
     const restoredImage =
       await wikiPage.screenshot(/*{ path: path.join(__dirname, 'restored.png')}*/);
+    const restoredImageBuffer = Buffer.from(restoredImage); // Convert Uint8Array to Buffer
+    const originalImageBuffer = Buffer.from(originalImage); // Ensure originalImage is also a Buffer
+
     looksSame(
-      originalImage,
-      restoredImage,
+      originalImageBuffer,
+      restoredImageBuffer,
       { tolerance: 82 },
       (_, { equal }) => {
         expect(equal).toBe(true);
       }
     );
 
-    await wikiPage.waitForTimeout(3000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Satisfied he goes to sleep
   }, 20000);
@@ -548,7 +559,7 @@ describe('Japanesify', () => {
     // He goes back to the tab and notices that all the e, ke, se, te, ne, he, me, re
     // are replaced by え, け, せ, て, ね, へ, め, れ
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaE.forEach((roma) => expect(body).not.toContain(roma));
     hiraE.forEach((hira) => expect(body).toContain(hira));
@@ -578,7 +589,7 @@ describe('Japanesify', () => {
     // then goes back to the first wiki page and sees that the
     // e, ke, se, te, ne, he, me, re are back
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaE.forEach((roma) => expect(body).toContain(roma));
     hiraE.forEach((hira) => expect(body).not.toContain(hira));
@@ -586,16 +597,18 @@ describe('Japanesify', () => {
     // he also notices the page looks the same as it did before being altered
     const restoredImage =
       await wikiPage.screenshot(/*{ path: path.join(__dirname, 'restored.png')}*/);
+    const restoredImageBuffer = Buffer.from(restoredImage); // Convert Uint8Array to Buffer
+    const originalImageBuffer = Buffer.from(originalImage); // Ensure originalImage is also a Buffer
     looksSame(
-      originalImage,
-      restoredImage,
+      originalImageBuffer,
+      restoredImageBuffer,
       { tolerance: 98 },
       (_, { equal }) => {
         expect(equal).toBe(true);
       }
     );
 
-    await wikiPage.waitForTimeout(3000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Satisfied he goes to sleep
   }, 20000);
@@ -662,7 +675,7 @@ describe('Japanesify', () => {
     // He goes back to the tab and notices that all the o, ko, so, to, no, ho, mo, ro, yo, wo to
     // are replaced by お, こ, そ, と, の, ほ, も, ろ, よ, を
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaO.forEach((roma) => expect(body).not.toContain(roma));
     hiraO.forEach((hira) => expect(body).toContain(hira));
@@ -692,7 +705,7 @@ describe('Japanesify', () => {
     // then goes back to the first wiki page and sees that the
     // o, ko, so, to, no, ho, mo, ro, yo, wo to are back
     await wikiPage.bringToFront();
-    await wikiPage.waitForTimeout(1000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     body = await wikiPage.$eval('body', (el) => (el as HTMLElement).innerText);
     romaO.forEach((roma) => expect(body).toContain(roma));
     hiraO.forEach((hira) => expect(body).not.toContain(hira));
@@ -700,16 +713,19 @@ describe('Japanesify', () => {
     // he also notices the page looks the same as it did before being altered
     const restoredImage =
       await wikiPage.screenshot(/*{ path: path.join(__dirname, 'restored.png')}*/);
+    const restoredImageBuffer = Buffer.from(restoredImage); // Convert Uint8Array to Buffer
+    const originalImageBuffer = Buffer.from(originalImage); // Ensure originalImage is also a Buffer
+
     looksSame(
-      originalImage,
-      restoredImage,
+      originalImageBuffer,
+      restoredImageBuffer,
       { tolerance: 61 },
       (_, { equal }) => {
         expect(equal).toBe(true);
       }
     );
 
-    await wikiPage.waitForTimeout(3000); // TODO: fix this
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Satisfied he goes to sleep
   }, 20000);
